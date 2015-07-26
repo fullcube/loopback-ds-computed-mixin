@@ -6,7 +6,7 @@ function computed(Model, options) {
 
   // Trigger a warning and remove the property from the watchlist when one of
   // the property is not found on the model or the defined callback is not found
-  _.mapKeys(options.properties, function (callback, property) {
+  _.mapKeys(options.properties, function(callback, property) {
     var removeProperty = false;
     if (_.isUndefined(Model.definition.properties[property])) {
       console.warn('Property %s on %s is undefined', property, Model.modelName);
@@ -27,14 +27,14 @@ function computed(Model, options) {
   debug('Computed mixin for Model %s with options %o', Model.modelName, options);
 
   // The loaded observer is triggered when an item is loaded
-  Model.observe('loaded', function (ctx, next) {
+  Model.observe('loaded', function(ctx, next) {
     // We don't act on new instances
     if (ctx.instance === undefined) {
       return next();
     }
 
     //
-    _.keys(options.properties).map(function (property) {
+    _.keys(options.properties).map(function(property) {
       var callback = options.properties[property];
 
       if (typeof Model[callback] !== 'function') {
@@ -47,7 +47,7 @@ function computed(Model, options) {
     });
 
     next();
-  })
+  });
 }
 
 module.exports = function mixin(app) {
