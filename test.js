@@ -1,6 +1,6 @@
 /* jshint mocha: true */
 
-var debug = require('debug')('loopback-ds-mixin-skeleton');
+var debug = require('debug')('loopback-ds-computed-mixin');
 var utils = require('loopback-datasource-juggler/lib/utils');
 
 var loopback = require('loopback');
@@ -36,7 +36,7 @@ describe('loopback datasource property', function () {
       name: String
     }, {
       mixins: {
-        Skeleton: {}
+        Computed: {}
       }
     });
 

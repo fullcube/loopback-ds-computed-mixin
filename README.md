@@ -1,8 +1,6 @@
-MIXIN SKELETON
+COMPUTED MIXIN
 =============
 
-This is a skeleton for a mixin for the LoopBack framework.
-
-Documentation and credits will be here soon.
+This is a mixin for the LoopBack framework that adds computed properties to a model.
 
 # MIT License
