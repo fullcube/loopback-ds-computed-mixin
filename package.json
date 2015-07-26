@@ -1,0 +1,38 @@
+{
+  "name": "loopback-ds-mixin-skeleton",
+  "version": "1.0.0",
+  "description": "A skeleton datasource mixin for the LoopBack framework.",
+  "keywords": [
+    "loopback",
+    "strongloop",
+    "mixin"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beeman/loopback-ds-mixin-skeleton.git"
+  },
+  "scripts": {
+    "lint": "jscs index.js && jshint index.js",
+    "test": "mocha -R spec --timeout 10000 test.js",
+    "test:watch": "npm run test -- -w",
+    "pretest": "npm run lint"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "debug": "2.2.0"
+  },
+  "devDependencies": {
+    "bluebird": "2.9.34",
+    "chai": "3.2.0",
+    "jscs": "1.13.1",
+    "jshint": "2.8.0",
+    "loopback": "2.19.0",
+    "loopback-datasource-juggler": "2.34.0",
+    "loopback-testing": "1.2.0",
+    "mocha": "2.2.5",
+    "mocha-sinon": "1.1.4",
+    "sinon": "1.15.4",
+    "sinon-chai": "2.8.0"
+  }
+}
