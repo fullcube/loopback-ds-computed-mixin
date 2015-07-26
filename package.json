@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/beeman/loopback-ds-computed-mixin.git"
+    "url": "https://github.com/fullcube/loopback-ds-computed-mixin.git"
   },
   "scripts": {
     "lint": "jscs index.js && jshint index.js",
