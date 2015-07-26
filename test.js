@@ -25,20 +25,38 @@ require('./')(app);
 var dbConnector = loopback.memory();
 
 // Main test
-describe('loopback datasource property', function () {
+describe('loopback datasource property', function() {
+
+  var Item;
+  var now = new Date();
 
   lt.beforeEach.withApp(app);
 
-  beforeEach(function (done) {
+  beforeEach(function(done) {
 
-    // Create a new model and attach the mixin
-    var Item = this.Item = loopback.PersistedModel.extend('item', {
-      name: String
+    Item = this.Item = loopback.PersistedModel.extend('item', {
+      name: String,
+      status: String,
+      readonly: Boolean,
+      requestedAt: Date
     }, {
       mixins: {
-        Computed: {}
+        Computed: {
+          "properties": {
+            "readonly": "computedReadonly",
+            "requestedAt": "computedRequestedAt"
+          }
+        }
       }
     });
+
+    Item.computedReadonly = function computedReadonly(item) {
+      return item.status === 'archived';
+    };
+
+    Item.computedRequestedAt = function computedRequestedAt(item) {
+      return now;
+    };
 
     // Attach model to db
     Item.attachTo(dbConnector);
@@ -46,16 +64,32 @@ describe('loopback datasource property', function () {
     app.use(loopback.rest());
     app.set('legacyExplorer', false);
     new lt.TestDataBuilder()
-      .define('item', Item, {
-        name: 'Item name'
+      .define('item1', Item, {
+        name: 'Item 1',
+        status: 'new'
+      })
+      .define('item2', Item, {
+        name: 'Item 23',
+        status: 'archived'
       })
       .buildTo(this, done);
   });
 
 
-  it('This is a test.', function (done) {
-    var item = this.item;
-    expect(item.name).to.equal('Item name');
-    done();
+  it('The first item is not readonly', function(done) {
+    Item.findById(this.item1.id).then(function(item) {
+      expect(item.requestedAt.toString()).to.equal(now.toString());
+      expect(item.readonly).to.equal(false);
+      done();
+    }).catch(done);
   });
+
+  it('The second item is readonly', function(done) {
+    Item.findById(this.item2.id).then(function(item) {
+      expect(item.requestedAt.toString()).to.equal(now.toString());
+      expect(item.readonly).to.equal(true);
+      done();
+    }).catch(done);
+  });
+
 });
