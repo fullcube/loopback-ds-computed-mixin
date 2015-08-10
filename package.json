@@ -1,6 +1,6 @@
 {
   "name": "loopback-ds-computed-mixin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A mixin for the LoopBack framework that adds computed properties to a model.",
   "keywords": [
     "loopback",
@@ -29,7 +29,7 @@
     "jscs": "1.13.1",
     "jshint": "2.8.0",
     "loopback": "2.19.0",
-    "loopback-datasource-juggler": "2.34.0",
+    "loopback-datasource-juggler": "2.36.0",
     "loopback-testing": "1.2.0",
     "mocha": "2.2.5",
     "mocha-sinon": "1.1.4",

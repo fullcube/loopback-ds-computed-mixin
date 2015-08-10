@@ -19,7 +19,7 @@ function computed(Model, options) {
     }
 
     if (removeProperty) {
-      debug('Remove Changed %s for %s ', property, Model.modelName);
+      debug('Remove computed property %s for %s ', property, Model.modelName);
       delete options.properties[property];
     }
   });
@@ -33,8 +33,7 @@ function computed(Model, options) {
       return next();
     }
 
-    //
-    _.keys(options.properties).map(function(property) {
+    Promise.map(Object.keys(options.properties), function(property) {
       var callback = options.properties[property];
 
       if (typeof Model[callback] !== 'function') {
@@ -43,10 +42,20 @@ function computed(Model, options) {
       }
 
       debug('Computing property %s with callback %s', property, callback);
-      ctx.instance[property] = Model[callback](ctx.instance);
-    });
 
-    next();
+      var value = Model[callback](ctx.instance);
+      if (value.then === undefined) {
+        ctx.instance[property] = value;
+      } else {
+        return Model[callback](ctx.instance)
+          .then(function(res) {
+            ctx.instance[property] = res;
+          })
+          .catch(next);
+      }
+    }).then(function() {
+      next();
+    }).catch(next);
   });
 }
 

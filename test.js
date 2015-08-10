@@ -38,13 +38,15 @@ describe('loopback datasource property', function() {
       name: String,
       status: String,
       readonly: Boolean,
+      promised: String,
       requestedAt: Date
     }, {
       mixins: {
         Computed: {
           "properties": {
             "readonly": "computedReadonly",
-            "requestedAt": "computedRequestedAt"
+            "requestedAt": "computedRequestedAt",
+            "promised": "computedPromised"
           }
         }
       }
@@ -56,6 +58,14 @@ describe('loopback datasource property', function() {
 
     Item.computedRequestedAt = function computedRequestedAt(item) {
       return now;
+    };
+
+    Item.computedPromised = function computedPromised(item, cb) {
+      cb = cb || utils.createPromiseCallback();
+      process.nextTick(function() {
+        cb(null, 'As promised I get back to you!');
+      });
+      return cb.promise;
     };
 
     // Attach model to db
@@ -80,6 +90,7 @@ describe('loopback datasource property', function() {
     Item.findById(this.item1.id).then(function(item) {
       expect(item.requestedAt.toString()).to.equal(now.toString());
       expect(item.readonly).to.equal(false);
+      expect(item.promised).to.equal('As promised I get back to you!');
       done();
     }).catch(done);
   });
@@ -88,6 +99,7 @@ describe('loopback datasource property', function() {
     Item.findById(this.item2.id).then(function(item) {
       expect(item.requestedAt.toString()).to.equal(now.toString());
       expect(item.readonly).to.equal(true);
+      expect(item.promised).to.equal('As promised I get back to you!');
       done();
     }).catch(done);
   });
