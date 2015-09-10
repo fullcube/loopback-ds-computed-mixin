@@ -14,7 +14,8 @@ function computed(Model, options) {
     }
 
     if (typeof Model[callback] !== 'function') {
-      console.warn('Callback %s for %s is not a model function', callback, property);
+      console.warn('Callback %s for %s is not a model function', callback,
+        property);
       removeProperty = true;
     }
 
@@ -24,7 +25,8 @@ function computed(Model, options) {
     }
   });
 
-  debug('Computed mixin for Model %s with options %o', Model.modelName, options);
+  debug('Computed mixin for Model %s with options %o', Model.modelName,
+    options);
 
   // The loaded observer is triggered when an item is loaded
   Model.observe('loaded', function(ctx, next) {
