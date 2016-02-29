@@ -7,20 +7,12 @@ function computed(Model, options) {
   // Trigger a warning and remove the property from the watchlist when one of
   // the property is not found on the model or the defined callback is not found
   _.mapKeys(options.properties, function(callback, property) {
-    var removeProperty = false;
     if (_.isUndefined(Model.definition.properties[property])) {
       console.warn('Property %s on %s is undefined', property, Model.modelName);
-      removeProperty = true;
     }
 
     if (typeof Model[callback] !== 'function') {
       console.warn('Callback %s for %s is not a model function', callback, property);
-      removeProperty = true;
-    }
-
-    if (removeProperty) {
-      debug('Remove computed property %s for %s ', property, Model.modelName);
-      delete options.properties[property];
     }
   });
 
