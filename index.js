@@ -26,6 +26,16 @@ function computed(Model, options) {
 
   debug('Computed mixin for Model %s with options %o', Model.modelName, options);
 
+  Model.observe('access', function logQuery(ctx, next) {
+    
+      // We store the fields filter, if any, to check it later in the loaded observer      
+      ctx.options.computedInfo = {};
+      ctx.options.computedInfo.hasFieldFilter = !_.isUndefined(ctx.query.fields);
+      if (ctx.options.computedInfo.hasFieldFilter) ctx.options.computedInfo.fieldList = ctx.query.fields;
+    
+    next();
+  });
+
   // The loaded observer is triggered when an item is loaded
   Model.observe('loaded', function(ctx, next) {
     // We don't act on new instances
@@ -41,6 +51,12 @@ function computed(Model, options) {
         return false;
       }
 
+      // If the query includes a field filter, we do not continue if the field was not specified
+      if (ctx.options.computedInfo.hasFieldFilter && ctx.options.computedInfo.fieldList.indexOf(property) == -1) {
+          debug('Field %s not included in field filter', property);
+          return false;
+      }
+      
       debug('Computing property %s with callback %s', property, callback);
 
       var value = Model[callback](ctx.instance);
