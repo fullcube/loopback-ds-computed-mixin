@@ -28,10 +28,10 @@ function computed(Model, options) {
 
   Model.observe('access', function logQuery(ctx, next) {
 
-      // We store the fields filter, if any, to check it later in the loaded observer      
-      ctx.options.computedInfo = {};
-      ctx.options.computedInfo.hasFieldFilter = !_.isUndefined(ctx.query.fields);
-      if (ctx.options.computedInfo.hasFieldFilter) ctx.options.computedInfo.fieldList = ctx.query.fields;
+    // We store the fields filter, if any, to check it later in the loaded observer
+    ctx.options.computedInfo = {};
+    ctx.options.computedInfo.hasFieldFilter = !_.isUndefined(ctx.query.fields);
+    if (ctx.options.computedInfo.hasFieldFilter) ctx.options.computedInfo.fieldList = ctx.query.fields;
 
     next();
   });
@@ -53,8 +53,8 @@ function computed(Model, options) {
 
       // If the query includes a field filter, we do not continue if the field was not specified
       if (ctx.options.computedInfo.hasFieldFilter && ctx.options.computedInfo.fieldList.indexOf(property) == -1) {
-          debug('Field %s not included in field filter', property);
-          return false;
+        debug('Field %s not included in field filter', property);
+        return false;
       }
 
       debug('Computing property %s with callback %s', property, callback);
