@@ -13,14 +13,15 @@
     "url": "https://github.com/fullcube/loopback-ds-computed-mixin.git"
   },
   "scripts": {
-    "lint": "jscs index.js && jshint index.js",
+    "lint": "jscs lib && jshint lib",
     "test": "mocha -R spec --timeout 10000 test.js",
     "test:watch": "npm run test -- -w",
     "pretest": "npm run lint"
   },
-  "main": "index.js",
+  "main": "lib/index.js",
   "dependencies": {
     "debug": "2.2.0",
+    "depd": "^1.1.0",
     "lodash": "3.10.0"
   },
   "devDependencies": {
