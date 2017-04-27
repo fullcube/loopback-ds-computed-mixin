@@ -20,21 +20,21 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "debug": "2.2.0",
+    "debug": "^2.6.4",
     "depd": "^1.1.0",
-    "lodash": "3.10.0"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "bluebird": "2.9.34",
-    "chai": "3.2.0",
-    "jscs": "1.13.1",
-    "jshint": "2.8.0",
-    "loopback": "2.19.0",
-    "loopback-datasource-juggler": "2.36.0",
-    "loopback-testing": "1.2.0",
-    "mocha": "2.2.5",
-    "mocha-sinon": "1.1.4",
-    "sinon": "1.15.4",
-    "sinon-chai": "2.8.0"
+    "bluebird": "^3.5.0",
+    "chai": "^3.5.0",
+    "jscs": "^3.0.7",
+    "jshint": "^2.9.4",
+    "loopback": "^3.6.0",
+    "loopback-datasource-juggler": "^3.5.0",
+    "loopback-testing": "^1.4.0",
+    "mocha": "^3.3.0",
+    "mocha-sinon": "^2.0.0",
+    "sinon": "^2.1.0",
+    "sinon-chai": "^2.9.0"
   }
 }
