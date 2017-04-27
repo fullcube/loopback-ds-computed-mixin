@@ -89,5 +89,5 @@ Run the tests in `test.js`
 Run with debugging output on:
 
 ```bash
-  DEBUG='loopback-ds-computed-mixin' npm test
+  DEBUG='loopback:mixin:computed' npm test
 ```
