@@ -17,6 +17,7 @@
     "test": "NODE_ENV=test nyc --reporter=lcov --reporter=text --reporter=text-summary mocha test/*test.js",
     "test:watch": "npm run test -- -w",
     "pretest": "npm run lint",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "main": "lib/index.js",
@@ -29,6 +30,7 @@
     "bluebird": "^3.5.0",
     "chai": "^3.5.0",
     "condition-circle": "^1.5.0",
+    "coveralls": "^2.13.0",
     "eslint": "^2.11.1",
     "eslint-config-fullcube": "^1.0.46",
     "loopback": "^3.6.0",
