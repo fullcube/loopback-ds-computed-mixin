@@ -1,6 +1,6 @@
 {
   "name": "loopback-ds-computed-mixin",
-  "version": "1.0.5",
+  "version": "0.0.0-development",
   "description": "A mixin for the LoopBack framework that adds computed properties to a model.",
   "keywords": [
     "loopback",
@@ -16,7 +16,8 @@
     "lint": "jscs lib && jshint lib",
     "test": "mocha -R spec --timeout 10000 test.js",
     "test:watch": "npm run test -- -w",
-    "pretest": "npm run lint"
+    "pretest": "npm run lint",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -27,6 +28,7 @@
   "devDependencies": {
     "bluebird": "^3.5.0",
     "chai": "^3.5.0",
+    "condition-circle": "^1.5.0",
     "jscs": "^3.0.7",
     "jshint": "^2.9.4",
     "loopback": "^3.6.0",
@@ -34,7 +36,11 @@
     "loopback-testing": "^1.4.0",
     "mocha": "^3.3.0",
     "mocha-sinon": "^2.0.0",
+    "semantic-release": "^6.3.2",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0"
+  },
+  "release": {
+    "verifyConditions": "condition-circle"
   }
 }
