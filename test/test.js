@@ -1,7 +1,7 @@
 const loopback = require('loopback')
 const lt = require('loopback-testing')
 const chai = require('chai')
-const expect = chai.expect
+const { expect } = chai
 
 global.Promise = require('bluebird')
 
@@ -51,11 +51,11 @@ describe('loopback computed property', function() {
 
   before(function(done) {
     new lt.TestDataBuilder()
-      .define('item1', Item, {
+      .define('itemOne', Item, {
         name: 'Item 1',
         status: 'archived',
       })
-      .define('item2', Item, {
+      .define('itemTwo', Item, {
         name: 'Item 2',
         status: 'new',
       })
@@ -63,21 +63,21 @@ describe('loopback computed property', function() {
   })
 
   before(function() {
-    return Promise.join(Item.findById(this.item1.id), Item.findById(this.item2.id), (item1, item2) => {
-      this.item1 = item1
-      this.item2 = item2
+    return Promise.join(Item.findById(this.itemOne.id), Item.findById(this.itemTwo.id), (itemOne, itemTwo) => {
+      this.itemOne = itemOne
+      this.itemTwo = itemTwo
     })
   })
 
   it('should set the model property to the value returned by the defined callback', function() {
-    expect(this.item1.requestedAt.toString()).to.equal(now.toString())
-    expect(this.item1.readonly).to.equal(true)
-    expect(this.item2.requestedAt.toString()).to.equal(now.toString())
-    expect(this.item2.readonly).to.equal(false)
+    expect(this.itemOne.requestedAt.toString()).to.equal(now.toString())
+    expect(this.itemOne.readonly).to.equal(true)
+    expect(this.itemTwo.requestedAt.toString()).to.equal(now.toString())
+    expect(this.itemTwo.readonly).to.equal(false)
   })
 
   it('should set the model property to the value resolved by the defined callback\'s promise', function() {
-    expect(this.item1.promised).to.equal('Item 1: As promised I get back to you!')
-    expect(this.item2.promised).to.equal('Item 2: As promised I get back to you!')
+    expect(this.itemOne.promised).to.equal('Item 1: As promised I get back to you!')
+    expect(this.itemTwo.promised).to.equal('Item 2: As promised I get back to you!')
   })
 })
