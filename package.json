@@ -35,7 +35,6 @@
     "coveralls": "^2.13.0",
     "eslint-config-fullcube": "^2.0.0",
     "loopback": "^3.6.0",
-    "loopback-datasource-juggler": "^3.5.0",
     "loopback-testing": "^1.4.0",
     "mocha": "^3.3.0",
     "nyc": "^10.2.0",
