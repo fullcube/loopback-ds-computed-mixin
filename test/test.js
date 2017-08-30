@@ -29,15 +29,23 @@ const Item = loopback.PersistedModel.extend('item', {
         readonly: 'computedReadonly',
         requestedAt: 'computedRequestedAt',
         promised: 'computedPromised',
+        accessToken: 'computedAccessToken',
       },
     },
   },
 })
 
+const testOptions = {
+  accessToken: {
+    id: 'ACCESS_TOKEN',
+  },
+}
+
 // Define computed property callbacks.
 Item.computedReadonly = item => Boolean(item.status === 'archived')
 Item.computedRequestedAt = () => now
 Item.computedPromised = item => Promise.resolve(`${item.name}: As promised I get back to you!`)
+Item.computedAccessToken = (item, options) => options.accessToken
 
 // Attach model to db.
 Item.attachTo(dbConnector)
@@ -63,10 +71,13 @@ describe('loopback computed property', function() {
   })
 
   before(function() {
-    return Promise.join(Item.findById(this.itemOne.id), Item.findById(this.itemTwo.id), (itemOne, itemTwo) => {
-      this.itemOne = itemOne
-      this.itemTwo = itemTwo
-    })
+    return Promise.join(
+      Item.findById(this.itemOne.id),
+      Item.findById(this.itemTwo.id, null, testOptions),
+      (itemOne, itemTwo) => {
+        this.itemOne = itemOne
+        this.itemTwo = itemTwo
+      })
   })
 
   it('should set the model property to the value returned by the defined callback', function() {
@@ -79,5 +90,11 @@ describe('loopback computed property', function() {
   it('should set the model property to the value resolved by the defined callback\'s promise', function() {
     expect(this.itemOne.promised).to.equal('Item 1: As promised I get back to you!')
     expect(this.itemTwo.promised).to.equal('Item 2: As promised I get back to you!')
+  })
+
+  it('should set the model property to the value returned by the defined callback with options', function() {
+    /* eslint-disable no-unused-expressions */
+    expect(this.itemOne.accessToken).to.be.undefined
+    expect(this.itemTwo.accessToken.id).to.equal('ACCESS_TOKEN')
   })
 })
