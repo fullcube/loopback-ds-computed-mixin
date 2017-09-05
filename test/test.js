@@ -11,8 +11,11 @@ const app = loopback()
 // import our mixin.
 require('../lib')(app)
 
-// Connect to db.
-const dbConnector = loopback.memory()
+// Create datasource.
+const dbConnector = loopback.createDataSource({
+  connector: loopback.Memory,
+  file: 'db.json',
+})
 
 const now = new Date()
 
@@ -49,6 +52,10 @@ describe('loopback computed property', function() {
 
   lt.beforeEach.withApp(app)
 
+  before(function() {
+    return Item.destroyAll()
+  })
+
   before(function(done) {
     new lt.TestDataBuilder()
       .define('itemOne', Item, {
@@ -79,5 +86,24 @@ describe('loopback computed property', function() {
   it('should set the model property to the value resolved by the defined callback\'s promise', function() {
     expect(this.itemOne.promised).to.equal('Item 1: As promised I get back to you!')
     expect(this.itemTwo.promised).to.equal('Item 2: As promised I get back to you!')
+  })
+
+  it('should not store the computed property', function() {
+    return this.itemOne.updateAttributes({ readonly: false })
+      .then(item => {
+        /* eslint global-require: 0 */
+        const db = require('../db.json')
+        const itemFromDb = JSON.parse(db.models.item[item.id])
+
+        expect(item).to.have.property('readonly', true)
+        expect(item).to.have.property('requestedAt')
+        expect(item).to.have.property('promised')
+
+        expect(itemFromDb).to.have.property('id', item.id)
+        expect(itemFromDb).to.have.property('name', 'Item 1')
+        expect(itemFromDb).to.not.have.property('readonly')
+        expect(itemFromDb).to.not.have.property('requestedAt')
+        expect(itemFromDb).to.not.have.property('promised')
+      })
   })
 })
