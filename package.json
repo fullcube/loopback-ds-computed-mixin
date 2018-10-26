@@ -23,7 +23,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "debug": "^3.0.1",
-    "depd": "^1.1.0",
+    "depd": "^2.0.0",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
