@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@bubltechnology/customizable-commit-analyzer": "^1.0.2-0",
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.4",
     "chai": "^4.1.2",
     "condition-circle": "^1.5.0",
     "conventional-commit-types": "^2.1.0",
