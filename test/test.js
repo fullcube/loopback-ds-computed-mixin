@@ -106,4 +106,15 @@ describe('loopback computed property', function() {
         expect(itemFromDb).to.not.have.property('promised')
       })
   })
+
+  it('should not compute if requested with "skipComputed" attribute', function() {
+    const { id } = this.itemOne
+
+    return new Promise(function(res) {
+      Item.find({ where: { id } }, { skipComputed: true }).then(function(item) {
+        expect(typeof item[0].readonly).to.be.equal('undefined')
+        res()
+      })
+    })
+  })
 })
