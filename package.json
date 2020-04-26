@@ -36,7 +36,7 @@
     "eslint-config-fullcube": "^3.0.0",
     "loopback": "^3.6.0",
     "loopback-testing": "^1.4.0",
-    "mocha": "^3.3.0",
+    "mocha": "^7.1.2",
     "nyc": "^11.1.0",
     "semantic-release": "^7.0.2"
   },
